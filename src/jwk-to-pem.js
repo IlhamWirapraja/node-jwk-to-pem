@@ -24,7 +24,8 @@ function jwkToBuffer(jwk, opts) {
 
 	switch (kty) {
 		case 'EC': {
-			return ec(jwk, opts);
+			throw new Error('EC not supported Yet!');
+			// return ec(jwk, opts);
 		}
 		case 'RSA': {
 			return rsa(jwk, opts);

@@ -1,8 +1,8 @@
 'use strict';
 
 var asn1 = require('asn1.js'),
-	Buffer = require('safe-buffer').Buffer,
-	EC = require('elliptic').ec;
+	Buffer = require('safe-buffer').Buffer;
+	// EC = require('elliptic').ec;
 
 var b64ToBn = require('./b64-to-bn');
 
@@ -53,58 +53,59 @@ Object.keys(oids).forEach(function(crv) {
 oids = null;
 
 function ecJwkToBuffer(jwk, opts) {
-	if ('string' !== typeof jwk.crv) {
-		throw new TypeError('Expected "jwk.crv" to be a String');
-	}
+	throw new Error('Not Implemented Yet');
+	// if ('string' !== typeof jwk.crv) {
+	// 	throw new TypeError('Expected "jwk.crv" to be a String');
+	// }
 
-	var hasD = 'string' === typeof jwk.d;
-	var xyTypes = hasD
-		? ['undefined', 'string']
-		: ['string'];
+	// var hasD = 'string' === typeof jwk.d;
+	// var xyTypes = hasD
+	// 	? ['undefined', 'string']
+	// 	: ['string'];
 
-	if (-1 === xyTypes.indexOf(typeof jwk.x)) {
-		throw new TypeError('Expected "jwk.x" to be a String');
-	}
+	// if (-1 === xyTypes.indexOf(typeof jwk.x)) {
+	// 	throw new TypeError('Expected "jwk.x" to be a String');
+	// }
 
-	if (-1 === xyTypes.indexOf(typeof jwk.y)) {
-		throw new TypeError('Expected "jwk.y" to be a String');
-	}
+	// if (-1 === xyTypes.indexOf(typeof jwk.y)) {
+	// 	throw new TypeError('Expected "jwk.y" to be a String');
+	// }
 
-	if (opts.private && !hasD) {
-		throw new TypeError('Expected "jwk.d" to be a String');
-	}
+	// if (opts.private && !hasD) {
+	// 	throw new TypeError('Expected "jwk.d" to be a String');
+	// }
 
-	var curveName = curves[jwk.crv];
-	if (!curveName) {
-		throw new Error('Unsupported curve "' + jwk.crv + '"');
-	}
+	// var curveName = curves[jwk.crv];
+	// if (!curveName) {
+	// 	throw new Error('Unsupported curve "' + jwk.crv + '"');
+	// }
 
-	var curve = new EC(curveName);
+	// var curve = new EC(curveName);
 
-	var key = {};
+	// var key = {};
 
-	var hasPub = jwk.x && jwk.y;
-	if (hasPub) {
-		key.pub = {
-			x: b64ToBn(jwk.x, false),
-			y: b64ToBn(jwk.y, false)
-		};
-	}
+	// var hasPub = jwk.x && jwk.y;
+	// if (hasPub) {
+	// 	key.pub = {
+	// 		x: b64ToBn(jwk.x, false),
+	// 		y: b64ToBn(jwk.y, false)
+	// 	};
+	// }
 
-	if (opts.private || !hasPub) {
-		key.priv = b64ToBn(jwk.d, true);
-	}
+	// if (opts.private || !hasPub) {
+	// 	key.priv = b64ToBn(jwk.d, true);
+	// }
 
-	key = curve.keyPair(key);
+	// key = curve.keyPair(key);
 
-	var keyValidation = key.validate();
-	if (!keyValidation.result) {
-		throw new Error('Invalid key for curve: "' + keyValidation.reason + '"');
-	}
+	// var keyValidation = key.validate();
+	// if (!keyValidation.result) {
+	// 	throw new Error('Invalid key for curve: "' + keyValidation.reason + '"');
+	// }
 
-	var result = keyToPem(jwk.crv, key, opts);
+	// var result = keyToPem(jwk.crv, key, opts);
 
-	return result;
+	// return result;
 }
 
 function keyToPem(crv, key, opts) {
